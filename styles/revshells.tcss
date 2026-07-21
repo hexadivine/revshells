@@ -1,0 +1,25 @@
+Screen {
+    layout: grid;
+    grid-size: 4 3;
+    grid-gutter: 1 2;
+    grid-rows: 16 5 1fr
+}
+
+.grid {
+    background: $boost;
+    height: 100%;
+    padding: 2;
+}
+
+.grid-1, .grid-2 {
+    column-span:2;
+}
+
+.grid-3 {
+    column-span: 4;
+}
+
+.grid-5 {
+    column-span:3;
+}
+

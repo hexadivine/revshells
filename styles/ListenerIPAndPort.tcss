@@ -1,0 +1,21 @@
+.field-row {
+    margin-top: 1
+}
+
+#ip-label, #port-label, #int-label {
+    width: auto;
+    padding-top: 1;
+}
+
+#interface{
+    width: 20
+}
+
+#ip {
+    margin-left: 2;
+    width: 30;
+}
+
+#port {
+    width: 30
+}
