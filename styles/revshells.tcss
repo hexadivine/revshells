@@ -1,8 +1,10 @@
 Screen {
     layout: grid;
-    grid-size: 4 3;
+    grid-size: 3 3;
     grid-gutter: 1 2;
-    grid-rows: 16 5 1fr
+    grid-rows: 13 5 1fr;
+    grid-columns: 30 30 1fr;
+    padding: 1 2;
 }
 
 Input, TextArea {
@@ -16,15 +18,16 @@ Input, TextArea {
     padding: 2;
 }
 
-.grid-1, .grid-2 {
+  .grid-1 {
     column-span:2;
+    padding-left: 5
 }
 
 .grid-3 {
-    column-span: 4;
+    column-span: 3;
 }
 
 .grid-5 {
-    column-span:3;
+    column-span:2;
 }
 

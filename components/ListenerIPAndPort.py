@@ -40,7 +40,6 @@ class ListenerIPAndPort(Static):
         with Horizontal(classes='field-row'):
             yield Label("IP: ", id='ip-label')
             yield Input(self.ip, id='ip')
-        with Horizontal(classes='field-row'):
             yield Label("Port: ", id='port-label')
             yield Input(self.port, id='port')
 
