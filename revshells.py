@@ -1,10 +1,12 @@
 from pathlib import Path
 from textual.app import App 
 from textual.widgets import Static
-
 from textual import on
+
 from components.ListenerIPAndPort import ListenerIPAndPort
 from components.Listener import Listener
+from components.ShellTypes import ShellTypes
+from components.ListLanguages import ListLanguages
 from components.PayloadArea import PayloadArea
 
 class RevShells(App):
@@ -17,10 +19,11 @@ class RevShells(App):
         self.listener = Listener(classes='grid grid-2')
         yield self.listener
 
-        for i in range(0, 5):
-            if i == 0 or i==4 or i==1:
-                continue
-            yield Static(f"{i+1}", classes=f"grid grid-{i+1}")
+        self.shell_types = ShellTypes(classes='grid grid-3')
+        yield self.shell_types
+
+        self.list_languages = ListLanguages(classes='grid grid-4')
+        yield self.list_languages
 
         self.payload_area = PayloadArea(classes='grid grid-5')
         yield self.payload_area
@@ -32,6 +35,14 @@ class RevShells(App):
         
         self.payload_area.ip = message.ip
         self.payload_area.port = message.port
+    
+    @on(ShellTypes.Update)
+    def shelltype_update(self, message):
+        self.list_languages.shelltype = message.shelltype
+
+    @on(ListLanguages.SelectPayload)
+    def selectpayload(self, message):
+        self.payload_area.payload = message.payload
 
 if __name__ == "__main__":
     app = RevShells()
