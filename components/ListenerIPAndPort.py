@@ -1,6 +1,6 @@
 from pathlib import Path
 from textual.widget import Widget
-from textual.widgets import Input, Label, Static, Select, OptionList
+from textual.widgets import Input, Label, Static, Select
 from textual.containers import Horizontal
 from textual.message import Message
 from textual import on
@@ -50,6 +50,7 @@ class ListenerIPAndPort(Static):
         self.ip = get_ip(event.value)
         self.query_one("#ip", Input).value = self.ip
         self.post_message(self.Update(self.ip, self.port))
+
 
     @on(Input.Changed)
     def change_ip_and_port(self, event):
