@@ -24,8 +24,9 @@ class Listener(Static):
                     value=self.listener_payload,
                     id='listener-type-select'
                 )
-        yield TextArea(self.listener_payload, id="listener-type-textarea")
-        yield Button("Copy", id="copy-listener", variant="primary")
+        with Horizontal():
+            yield TextArea(self.listener_payload, id="listener-type-textarea")
+            yield Button("Copy", id="copy-listener", variant="primary")
     
     def watch_ip(self, ip):
         if (self.is_mounted):
@@ -44,6 +45,7 @@ class Listener(Static):
     def copy_listener(self):
         listener = self.substitute_ip_and_port(self.listener_payload, self.ip, self.port)
         self.app.copy_to_clipboard(listener)
+        self.notify("Listener copied to clipboard!")
 
     # Custom method to replace placeholder
     def substitute_ip_and_port(self, listener_payload, ip, port):

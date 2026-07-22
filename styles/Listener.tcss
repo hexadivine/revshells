@@ -2,6 +2,10 @@
     margin-top: 1
 }
 
+#listener-type-textarea {
+    height: 1fr
+}
+
 #copy-listener {
     margin-top: 1
 }
