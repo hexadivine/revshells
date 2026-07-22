@@ -2,25 +2,26 @@ Screen {
     layout: grid;
     grid-size: 3 3;
     grid-gutter: 1 2;
-    grid-rows: 13 5 1fr;
+    grid-rows: 13 3 1fr;
     grid-columns: 30 30 1fr;
     padding: 1 2;
-}
-
-Input, TextArea {
-    border: tall white
 }
 
 
 .grid {
     background: $boost;
     height: 100%;
-    padding: 2;
 }
+
 
   .grid-1 {
     column-span:2;
-    padding-left: 5
+    padding: 1 2;
+    padding-left: 5;
+}
+
+.grid-2 {
+    padding: 1 2;
 }
 
 .grid-3 {
@@ -29,5 +30,6 @@ Input, TextArea {
 
 .grid-5 {
     column-span:2;
+    padding: 1 2;
 }
 
