@@ -1,0 +1,28 @@
+#os-label {
+    padding-top: 1
+}
+
+#name-label {
+    padding-left: 2;
+    padding-top: 1
+
+}
+
+#name-input {
+    width: 60%
+}
+
+
+#payload-text {
+    height: 60%;
+    margin-bottom: 1;
+    margin-top: 1
+}
+
+#shell-label {
+    margin-top: 1
+}
+
+#encoding-label {
+    padding-top: 1
+}
