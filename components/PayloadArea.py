@@ -32,7 +32,8 @@ class PayloadArea(Static):
             yield Input(id='name-input')
 
         yield TextArea(self.payload, id='payload-text')
-        with Horizontal():
+
+        with Horizontal(id='payloads-footer'):
             yield Label("Shell: ", id='shell-label')
             yield Select(
                 options=[(shell, shell) for shell in self.shells],

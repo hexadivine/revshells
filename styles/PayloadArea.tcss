@@ -19,6 +19,10 @@
     margin-top: 1
 }
 
+#payloads-footer {
+    align-vertical: bottom
+}
+
 #shell-label {
     margin-top: 1
 }
