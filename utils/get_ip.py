@@ -3,9 +3,8 @@ import subprocess
 
 def get_ip(interface):
     valid_interfaces = get_interfaces()
-    print(valid_interfaces)
     if (interface not in valid_interfaces):
-        raise "InvalidInterface"
+        return ''
     
     cmd = f"ip -4 addr show {interface} | grep 'inet' | cut -d' ' -f 6 | cut -d'/' -f 1"
     ip = subprocess.run(cmd, capture_output=True, shell=True, text=True).stdout.rstrip().lstrip()
