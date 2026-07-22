@@ -1,0 +1,7 @@
+#listener-type-label {
+    margin-top: 1
+}
+
+#copy-listener {
+    margin-top: 1
+}
