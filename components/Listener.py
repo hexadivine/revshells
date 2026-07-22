@@ -2,8 +2,11 @@ from textual.widgets import Static, Label, Select, TextArea, Button
 from textual.containers import Horizontal
 from textual import on
 from textual.reactive import reactive
+
 import json
 from pathlib import Path
+
+from utils.substitute import substitute
 
 class Listener(Static):
     DEFAULT_CSS = (Path(__file__).parent / "../styles/Listener.tcss").read_text()
@@ -30,20 +33,20 @@ class Listener(Static):
     
     def watch_ip(self, ip):
         if (self.is_mounted):
-            self.query_one("#listener-type-textarea", TextArea).text = self.substitute_ip_and_port(self.listener_payload, ip, self.port)
+            self.query_one("#listener-type-textarea", TextArea).text = substitute(self.listener_payload, ip, self.port)
     
     def watch_port(self, port):
         if (self.is_mounted):
-            self.query_one("#listener-type-textarea", TextArea).text = self.substitute_ip_and_port(self.listener_payload, self.ip, port)
+            self.query_one("#listener-type-textarea", TextArea).text = substitute(self.listener_payload, self.ip, port)
 
     @on(Select.Changed)
     def change_listener_type(self, event):
         self.listener_payload = event.value
-        self.query_one('#listener-type-textarea', TextArea).text = self.substitute_ip_and_port(self.listener_payload, self.ip, self.port)
+        self.query_one('#listener-type-textarea', TextArea).text = substitute(self.listener_payload, self.ip, self.port)
     
     @on(Button.Pressed, '#copy-listener')
     def copy_listener(self):
-        listener = self.substitute_ip_and_port(self.listener_payload, self.ip, self.port)
+        listener = substitute(self.listener_payload, self.ip, self.port)
         self.app.copy_to_clipboard(listener)
         self.notify("Listener copied to clipboard!")
 
