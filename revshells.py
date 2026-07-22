@@ -43,6 +43,10 @@ class RevShells(App):
     @on(ListLanguages.SelectPayload)
     def selectpayload(self, message):
         self.payload_area.payload = message.payload
+    
+    @on(PayloadArea.FilterBy)
+    def set_language_to_filter(self, filter):
+        self.list_languages.language_filter = filter.language_filter
 
 if __name__ == "__main__":
     app = RevShells()

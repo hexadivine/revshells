@@ -1,6 +1,7 @@
 from textual.widgets import Static, Label, TextArea, Button, Select, Input
 from textual.reactive import reactive
 from textual.containers import Horizontal
+from textual.message import Message
 from textual import on
 
 from pathlib import Path
@@ -15,6 +16,11 @@ class PayloadArea(Static):
     port = reactive('')
     payload = reactive('tst')
 
+    class FilterBy(Message):
+        def __init__(self, language, **kwargs):
+            super().__init__(**kwargs)
+            self.language_filter = language
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.shell = 'sh'
@@ -28,8 +34,8 @@ class PayloadArea(Static):
                 options=[("Linux", "Linux"), ("Linux", "Linux")],
                 id='os-select'
             )
-            yield Label("Name: ", id='name-label')
-            yield Input(id='name-input')
+            yield Label("Name: ", id='language-filter-label')
+            yield Input(id='language-filter-input')
 
         yield TextArea(self.payload, id='payload-text')
 
@@ -58,6 +64,10 @@ class PayloadArea(Static):
         if (self.is_mounted):
             self.query_one("#payload-text", TextArea).text = substitute(payload, self.ip, self.port, self.shell)
     
+    @on(Input.Changed, '#language-filter-input')
+    def language_filter_update(self, event):
+        self.post_message(self.FilterBy(event.value))
+
     @on(Select.Changed, '#shell-select')
     def change_shell(self, event):
         self.shell = event.value

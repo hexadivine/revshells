@@ -11,6 +11,7 @@ class ListLanguages(Static):
     DEFAULT_CSS = (Path(__file__).parent / "../styles/ListLanguages.tcss").read_text()
 
     shelltype = reactive('reverse', recompose=True)
+    language_filter = reactive('', recompose=True)
 
     class SelectPayload(Message):
         def __init__(self, payload, **kwargs):
@@ -20,11 +21,11 @@ class ListLanguages(Static):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._load_shells()
+        self.filtered_languages = getattr(self, self.shelltype, [])
 
     def compose(self):
-        languages = getattr(self, self.shelltype, [])
         with VerticalScroll():
-            for index, language in enumerate(languages):
+            for index, language in enumerate(self.filtered_languages):
                 btn = Button(language['name'], 
                             classes='language-button', 
                             id=f'language-button-{index}',
@@ -34,13 +35,18 @@ class ListLanguages(Static):
                 yield btn
 
     def on_mount(self):
-        languages = getattr(self, self.shelltype, [])
-        self.post_message(self.SelectPayload(languages[0]['command']))
+        self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
 
     def watch_shelltype(self):
         if (self.is_mounted):
-            languages = getattr(self, self.shelltype, [])
-            self.post_message(self.SelectPayload(languages[0]['command']))
+            self.filtered_languages = self._filter_languages()
+            if (len(self.filtered_languages) > 0):
+                self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
+
+    def watch_language_filter(self):
+        self.filtered_languages = self._filter_languages()
+        if (len(self.filtered_languages) > 0):
+            self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
 
     @on(Button.Pressed)
     def select_language(self, event):
@@ -60,15 +66,17 @@ class ListLanguages(Static):
         #     self.reverse = json.load(reverse_shell_file)
 
     def _mark_selected(self, id):
-        languages = getattr(self, self.shelltype, [])
         payload = None
-        for i in range(len(languages)):
-            button = self.query_one(f"#language-button-{i}", Button)
-            if id == f"language-button-{i}":
-                button.variant = "primary" 
-                payload = button.command
-            else:
-                button.variant = "default" 
+        for i in range(len(self.filtered_languages)):
+            try:
+                button = self.query_one(f"#language-button-{i}", Button)
+                if id == f"language-button-{i}":
+                    button.variant = "primary" 
+                    payload = button.command
+                else:
+                    button.variant = "default" 
+            except:
+                pass
 
         return payload
 
@@ -76,3 +84,11 @@ class ListLanguages(Static):
         first_btn = self.query(Button).first()
         first_btn.variant = 'primary'
         self.post_message(self.SelectPayload(first_btn.command))
+
+    def _filter_languages(self):
+        filtered_languages = []
+        languages = getattr(self, self.shelltype, [])
+        for language in languages:
+            if self.language_filter.lower() in language['name'].lower():
+                filtered_languages.append(language)
+        return filtered_languages
