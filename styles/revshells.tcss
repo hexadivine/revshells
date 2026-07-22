@@ -5,6 +5,11 @@ Screen {
     grid-rows: 16 5 1fr
 }
 
+Input, TextArea {
+    border: tall white
+}
+
+
 .grid {
     background: $boost;
     height: 100%;
