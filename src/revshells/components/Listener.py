@@ -59,9 +59,12 @@ class Listener(Static):
     @on(Button.Pressed, '#copy-listener')
     def copy_listener(self):
         listener = substitute(self.listener_payload, self.ip, self.port, context=self.context)
-        self.app.copy_to_clipboard(listener)
-        copy_to_clipboard(listener)
-        self.notify("Listener copied to clipboard!")
+        # self.app.copy_to_clipboard(listener)
+        is_copied = copy_to_clipboard(listener)
+        if is_copied:
+            self.notify("Payload copied to clipboard!")
+        else:
+            self.notify("Please install xclip/xsel/wl-copy to copy!", severity="error")
 
     # Custom method to replace placeholder
     def substitute_ip_and_port(self, listener_payload, ip, port):

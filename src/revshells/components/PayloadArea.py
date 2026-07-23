@@ -3,6 +3,7 @@ from textual.reactive import reactive
 from textual.containers import Horizontal
 from textual.message import Message
 from textual import on
+from textual.widgets.text_area import Selection
 
 from pathlib import Path
 import json
@@ -89,6 +90,11 @@ class PayloadArea(Static):
             substituted_payload = substitute(payload, self.ip, self.port, self.shell)
             encoded_payload = self._encode(substituted_payload)
             self.query_one("#payload-text", TextArea).text = encoded_payload
+            text_area = self.query_one("#payload-text", TextArea)
+
+            text_area.select_all() 
+
+            text_area.focus()
     
     @on(Input.Changed, '#language-filter-input')
     def language_filter_update(self, event):
@@ -118,10 +124,13 @@ class PayloadArea(Static):
     def copy_payload(self):
         substituted_payload = substitute(self.payload, self.ip, self.port, self.shell)
         encoded_payload = self._encode(substituted_payload)
-        self.app.copy_to_clipboard(encoded_payload)
-        copy_to_clipboard(encoded_payload)
+        # self.app.copy_to_clipboard(encoded_payload)
+        is_copied = copy_to_clipboard(encoded_payload)
+        if is_copied:
+            self.notify("Payload copied to clipboard!")
+        else:
+            self.notify("Please install xclip/xsel/wl-copy to copy!", severity="error")
 
-        self.notify("Payload copied to clipboard!")
 
     def _encode(self, payload):
         match self.encode_type:
