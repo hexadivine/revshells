@@ -1,4 +1,7 @@
 #!/usr/bin/bash
+# Installs dependency to copy payload/listener
+
+
 set -e
 
 # Pick package manager
