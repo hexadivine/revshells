@@ -90,11 +90,6 @@ class PayloadArea(Static):
             substituted_payload = substitute(payload, self.ip, self.port, self.shell)
             encoded_payload = self._encode(substituted_payload)
             self.query_one("#payload-text", TextArea).text = encoded_payload
-            text_area = self.query_one("#payload-text", TextArea)
-
-            text_area.select_all() 
-
-            text_area.focus()
     
     @on(Input.Changed, '#language-filter-input')
     def language_filter_update(self, event):
