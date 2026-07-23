@@ -62,9 +62,9 @@ class Listener(Static):
         # self.app.copy_to_clipboard(listener)
         is_copied = copy_to_clipboard(listener)
         if is_copied:
-            self.notify("Payload copied to clipboard!")
+            self.notify("Listener copied to clipboard!")
         else:
-            self.notify("Please install xclip/xsel/wl-copy to copy!", severity="error")
+            self.notify("Install xclip/xsel/wl-copy dependency!", severity="error")
 
     # Custom method to replace placeholder
     def substitute_ip_and_port(self, listener_payload, ip, port):
