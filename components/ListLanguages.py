@@ -65,10 +65,10 @@ class ListLanguages(Static):
             self.reverse = json.load(reverse_shell_file)
         with open('./assets/shell_bind.json') as bind_shell_file:
             self.bind = json.load(bind_shell_file)
-        # with open('./../assets/shell_reverse.json') as reverse_shell_file:
-        #     self.reverse = json.load(reverse_shell_file)
-        # with open('./../assets/shell_reverse.json') as reverse_shell_file:
-        #     self.reverse = json.load(reverse_shell_file)
+        with open('./assets/shell_msfvenom.json') as msfvenom_shell_file:
+            self.msfvenom = json.load(msfvenom_shell_file)
+        with open('./assets/shell_hoaxshell.json') as hoaxshell_file:
+            self.hoaxshell = json.load(hoaxshell_file)
 
     def _mark_selected(self, id):
         payload = None
