@@ -6,7 +6,10 @@ A terminal UI (TUI) tool for quickly generating, customizing, and copying revers
 
 ## Dependencies
 
-Install `xsel`, `xclip`, or `wl-copy` manually, or use the script below:
+(May not required if you are using Kali Linux)
+
+Install `xsel`/`xclip`, or `wl-copy` manually (to copy on button click functionality), or use the script below: 
+
 
 ```
 curl -fsSL https://raw.githubusercontent.com/hexadivine/revshells/refs/heads/main/dependency/install.sh | bash
@@ -16,6 +19,12 @@ curl -fsSL https://raw.githubusercontent.com/hexadivine/revshells/refs/heads/mai
 
 ```
 pipx install git+https://github.com/hexadivine/revshells.git
+```
+
+## Useage
+
+```
+revshells
 ```
 
 ## Features
