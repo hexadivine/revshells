@@ -47,6 +47,7 @@ class RevShells(App):
     @on(PayloadArea.FilterBy)
     def set_language_to_filter(self, filter):
         self.list_languages.language_filter = filter.language_filter
+        self.list_languages.os_filter = filter.os_filter
 
 if __name__ == "__main__":
     app = RevShells()

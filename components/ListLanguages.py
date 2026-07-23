@@ -12,6 +12,7 @@ class ListLanguages(Static):
 
     shelltype = reactive('reverse', recompose=True)
     language_filter = reactive('', recompose=True)
+    os_filter = reactive('', recompose=True)
 
     class SelectPayload(Message):
         def __init__(self, payload, **kwargs):
@@ -48,12 +49,16 @@ class ListLanguages(Static):
         if (len(self.filtered_languages) > 0):
             self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
 
+    def watch_os_filter(self):
+        self.filtered_languages = self._filter_languages()
+        if (len(self.filtered_languages) > 0):
+            self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
+
     @on(Button.Pressed)
     def select_language(self, event):
         id = event.button.id
         payload = self._mark_selected(id)
         self.post_message(self.SelectPayload(payload))
-        # self.notify(event.value)
 
     def _load_shells(self):
         with open ('./assets/shell_reverse.json') as reverse_shell_file:
@@ -88,7 +93,8 @@ class ListLanguages(Static):
     def _filter_languages(self):
         filtered_languages = []
         languages = getattr(self, self.shelltype, [])
+
         for language in languages:
-            if self.language_filter.lower() in language['name'].lower():
+            if self.language_filter.lower() in language['name'].lower() and ( self.os_filter == 'All' or self.os_filter.lower() in language['meta']):
                 filtered_languages.append(language)
         return filtered_languages

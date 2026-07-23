@@ -1,0 +1,8 @@
+[
+    "Base32",
+    "Base64",
+    "URL Encode",
+    "Safe URL Encode",
+    "Double URL Encode",
+    "Double Safe URL Encode"
+]

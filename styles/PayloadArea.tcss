@@ -8,8 +8,8 @@
 
 }
 
-#name-input {
-    width: 60%
+#language-filter-input {
+    width: 50%
 }
 
 

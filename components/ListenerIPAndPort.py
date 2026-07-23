@@ -35,6 +35,7 @@ class ListenerIPAndPort(Static):
                         options=[(interface, interface) for interface in INTERFACES],
                         value=self.interface,
                         prompt="-",
+                        allow_blank=False,
                         id='interface'
                     )
         with Horizontal(classes='field-row'):
