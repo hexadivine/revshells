@@ -9,7 +9,7 @@ description = "TUI tool for generating reverse shell payloads"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "textual==8.2.8",
+    "textual>=8.2,<9",
 ]
 
 [project.scripts]
@@ -19,4 +19,4 @@ revshells = "revshells.main:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-revshells = ["styles/*.tcss", "assets/**/*"]
+revshells = ["styles/*.tcss", "assets/*"]
