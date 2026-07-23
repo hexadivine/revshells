@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from utils.substitute import substitute
+from utils.copy_to_clipboard import copy_to_clipboard
 
 class Listener(Static):
     DEFAULT_CSS = (Path(__file__).parent / "../styles/Listener.tcss").read_text()
@@ -57,6 +58,7 @@ class Listener(Static):
     def copy_listener(self):
         listener = substitute(self.listener_payload, self.ip, self.port, context=self.context)
         self.app.copy_to_clipboard(listener)
+        copy_to_clipboard(listener)
         self.notify("Listener copied to clipboard!")
 
     # Custom method to replace placeholder

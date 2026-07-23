@@ -8,6 +8,7 @@ from pathlib import Path
 import json
 from utils.substitute import substitute
 from utils import encode_to
+from utils.copy_to_clipboard import copy_to_clipboard
 
 class PayloadArea(Static):
 
@@ -116,6 +117,8 @@ class PayloadArea(Static):
         substituted_payload = substitute(self.payload, self.ip, self.port, self.shell)
         encoded_payload = self._encode(substituted_payload)
         self.app.copy_to_clipboard(encoded_payload)
+        copy_to_clipboard(encoded_payload)
+
         self.notify("Payload copied to clipboard!")
 
     def _encode(self, payload):
