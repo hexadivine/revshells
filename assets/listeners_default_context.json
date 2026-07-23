@@ -1,0 +1,4 @@
+{
+    "payload": "windows/x64/meterpreter/reverse_tcp",
+    "type": "cmd-curl"
+}

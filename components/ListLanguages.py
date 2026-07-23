@@ -18,6 +18,11 @@ class ListLanguages(Static):
         def __init__(self, payload, **kwargs):
             super().__init__(**kwargs)
             self.payload = payload
+    
+    class SelectListenerData(Message):
+        def __init__(self, context, **kwargs):
+            super().__init__(**kwargs)
+            self.context = context
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -28,37 +33,44 @@ class ListLanguages(Static):
         with VerticalScroll():
             for index, language in enumerate(self.filtered_languages):
                 btn = Button(language['name'], 
-                            classes='language-button', 
-                            id=f'language-button-{index}',
-                            variant='primary' if index == 0 else 'default'
+                                classes='language-button', 
+                                id=f'language-button-{index}',
+                                variant='primary' if index == 0 else 'default'
                             )
                 btn.command = language['command']
+                btn.context = language.get('listener_context', {})
                 yield btn
 
     def on_mount(self):
         self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
+        self.post_message(self.SelectListenerData(self.filtered_languages[0].get('listener_context', {})))
+
 
     def watch_shelltype(self):
         if (self.is_mounted):
             self.filtered_languages = self._filter_languages()
             if (len(self.filtered_languages) > 0):
                 self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
+                self.post_message(self.SelectListenerData(self.filtered_languages[0].get('listener_context', {})))
 
     def watch_language_filter(self):
         self.filtered_languages = self._filter_languages()
         if (len(self.filtered_languages) > 0):
             self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
+            self.post_message(self.SelectListenerData(self.filtered_languages[0].get('listener_context', {})))
 
     def watch_os_filter(self):
         self.filtered_languages = self._filter_languages()
         if (len(self.filtered_languages) > 0):
             self.post_message(self.SelectPayload(self.filtered_languages[0]['command']))
+            self.post_message(self.SelectListenerData(self.filtered_languages[0].get('listener_context', {})))
 
     @on(Button.Pressed)
     def select_language(self, event):
         id = event.button.id
-        payload = self._mark_selected(id)
+        payload, context = self._mark_selected(id)
         self.post_message(self.SelectPayload(payload))
+        self.post_message(self.SelectListenerData(context))
 
     def _load_shells(self):
         with open ('./assets/shell_reverse.json') as reverse_shell_file:
@@ -72,18 +84,19 @@ class ListLanguages(Static):
 
     def _mark_selected(self, id):
         payload = None
+        context = {}
         for i in range(len(self.filtered_languages)):
             try:
                 button = self.query_one(f"#language-button-{i}", Button)
                 if id == f"language-button-{i}":
                     button.variant = "primary" 
                     payload = button.command
+                    context = button.context
                 else:
                     button.variant = "default" 
             except:
                 pass
-
-        return payload
+        return payload, context
 
     def _select_first_btn(self):
         first_btn = self.query(Button).first()

@@ -44,6 +44,11 @@ class RevShells(App):
     def selectpayload(self, message):
         self.payload_area.payload = message.payload
     
+    # make listerner payload selection aware
+    @on(ListLanguages.SelectListenerData)
+    def change_listener_params(self, message):
+        self.listener.context = message.context
+
     @on(PayloadArea.FilterBy)
     def set_language_to_filter(self, filter):
         self.list_languages.language_filter = filter.language_filter
