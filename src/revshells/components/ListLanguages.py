@@ -2,10 +2,12 @@ from textual.widgets import Static, Button
 from textual.reactive import reactive
 from textual.containers import VerticalScroll
 from textual.message import Message
-from utils.substitute import substitute
+from revshells.utils.substitute import substitute
 from textual import on
 from pathlib import Path
 import json
+
+ASSETS_DIR = Path(__file__).parent / "../assets"
 
 class ListLanguages(Static):
     DEFAULT_CSS = (Path(__file__).parent / "../styles/ListLanguages.tcss").read_text()
@@ -73,13 +75,13 @@ class ListLanguages(Static):
         self.post_message(self.SelectListenerData(context))
 
     def _load_shells(self):
-        with open ('./assets/shell_reverse.json') as reverse_shell_file:
+        with open (f'{ASSETS_DIR}/shell_reverse.json') as reverse_shell_file:
             self.reverse = json.load(reverse_shell_file)
-        with open('./assets/shell_bind.json') as bind_shell_file:
+        with open(f'{ASSETS_DIR}/shell_bind.json') as bind_shell_file:
             self.bind = json.load(bind_shell_file)
-        with open('./assets/shell_msfvenom.json') as msfvenom_shell_file:
+        with open(f'{ASSETS_DIR}/shell_msfvenom.json') as msfvenom_shell_file:
             self.msfvenom = json.load(msfvenom_shell_file)
-        with open('./assets/shell_hoaxshell.json') as hoaxshell_file:
+        with open(f'{ASSETS_DIR}/shell_hoaxshell.json') as hoaxshell_file:
             self.hoaxshell = json.load(hoaxshell_file)
 
     def _mark_selected(self, id):

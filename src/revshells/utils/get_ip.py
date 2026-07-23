@@ -1,4 +1,4 @@
-from utils.get_interfaces import get_interfaces
+from revshells.utils.get_interfaces import get_interfaces
 import subprocess
 
 def get_ip(interface):

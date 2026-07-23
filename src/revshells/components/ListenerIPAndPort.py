@@ -5,8 +5,9 @@ from textual.containers import Horizontal
 from textual.message import Message
 from textual import on
 from textual.reactive import reactive
-from utils.get_ip import get_ip
-from utils.get_interfaces import get_interfaces
+
+from revshells.utils.get_ip import get_ip
+from revshells.utils.get_interfaces import get_interfaces
 
 INTERFACES = get_interfaces()
 DEFAULT_INTERFACE = 'tun0' if 'tun0' in INTERFACES else 'lo'

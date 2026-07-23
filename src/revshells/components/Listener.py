@@ -6,8 +6,10 @@ from textual.reactive import reactive
 import json
 from pathlib import Path
 
-from utils.substitute import substitute
-from utils.copy_to_clipboard import copy_to_clipboard
+from revshells.utils.substitute import substitute
+from revshells.utils.copy_to_clipboard import copy_to_clipboard
+
+ASSETS_DIR = Path(__file__).parent / "../assets"
 
 class Listener(Static):
     DEFAULT_CSS = (Path(__file__).parent / "../styles/Listener.tcss").read_text()
@@ -19,7 +21,7 @@ class Listener(Static):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        with open('./assets/listeners.json') as listener_file:
+        with open(f'{ASSETS_DIR}/listeners.json') as listener_file:
             self.listeners = json.load(listener_file)
 
     def compose(self):

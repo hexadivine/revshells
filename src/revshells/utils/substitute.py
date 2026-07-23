@@ -1,7 +1,11 @@
 import json
+from pathlib import Path
+
+ASSETS_DIR = Path(__file__).parent / "../assets"
+
 
 def load_listener_context():
-    with open('./assets/listeners_default_context.json') as listerners_context_file:
+    with open(f'{ASSETS_DIR}/listeners_default_context.json') as listerners_context_file:
         return json.load(listerners_context_file)
 
 def substitute(payload, ip, port, shell='', context={}):

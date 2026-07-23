@@ -6,9 +6,11 @@ from textual import on
 
 from pathlib import Path
 import json
-from utils.substitute import substitute
-from utils import encode_to
-from utils.copy_to_clipboard import copy_to_clipboard
+from revshells.utils.substitute import substitute
+from revshells.utils import encode_to
+from revshells.utils.copy_to_clipboard import copy_to_clipboard
+
+ASSETS_DIR = Path(__file__).parent / "../assets"
 
 class PayloadArea(Static):
 
@@ -31,11 +33,11 @@ class PayloadArea(Static):
         self.os_filter = ''
         self.encode_type = ''
 
-        with open('./assets/shells.json') as shells_file:
+        with open(f'{ASSETS_DIR}/shells.json') as shells_file:
             self.shells = json.load(shells_file)
-        with open('./assets/shell__meta.json') as shells__meta_file:
+        with open(f'{ASSETS_DIR}/shell__meta.json') as shells__meta_file:
             self.shells__meta = json.load(shells__meta_file)
-        with open('./assets/payload_encoders.json') as payload_encoders_file:
+        with open(f'{ASSETS_DIR}/payload_encoders.json') as payload_encoders_file:
             self.payload_encoders = json.load(payload_encoders_file)
 
         

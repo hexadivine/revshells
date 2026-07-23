@@ -3,14 +3,14 @@ from textual.app import App
 from textual.widgets import Static
 from textual import on
 
-from components.ListenerIPAndPort import ListenerIPAndPort
-from components.Listener import Listener
-from components.ShellTypes import ShellTypes
-from components.ListLanguages import ListLanguages
-from components.PayloadArea import PayloadArea
+from revshells.components.ListenerIPAndPort import ListenerIPAndPort
+from revshells.components.Listener import Listener
+from revshells.components.ShellTypes import ShellTypes
+from revshells.components.ListLanguages import ListLanguages
+from revshells.components.PayloadArea import PayloadArea
 
 class RevShells(App):
-    CSS_PATH = "./styles/revshells.tcss"
+    CSS_PATH = str(Path(__file__).parent / "styles" / "revshells.tcss")
     
     def compose(self):
         listener_ip_and_port = ListenerIPAndPort(classes='grid grid-1')
@@ -54,6 +54,9 @@ class RevShells(App):
         self.list_languages.language_filter = filter.language_filter
         self.list_languages.os_filter = filter.os_filter
 
-if __name__ == "__main__":
+def main():
     app = RevShells()
     app.run()
+
+if __name__ == "__main__":
+    main()
