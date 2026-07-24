@@ -1,9 +1,9 @@
 #!/usr/bin/bash
+#
 # Installs dependency to copy payload/listener
-
+#
 
 set -e
-
 # Pick package manager
 UPDATE=":"
 if command -v apt-get >/dev/null; 
@@ -30,16 +30,24 @@ fi
 
 # Decide which tool(s) to install based on session type
 if [ "$XDG_SESSION_TYPE" = "wayland" ] || [ -n "$WAYLAND_DISPLAY" ]; then
-    PKG="wl-clipboard"
-    CHECK="wl-copy"
+    PKG="wl-clipboard pipx"
+    CHECK="wl-copy pipx"
 else
-    PKG="xclip xsel"
-    CHECK="xclip"
+    PKG="xclip xsel pipx"
+    CHECK="xclip pipx"
 fi
 
-# Skip if already installed
-if command -v "$CHECK" >/dev/null; then
-    echo "$CHECK already installed. Nothing to do."
+# Skip if all required commands are already installed
+all_found=true
+for cmd in $CHECK; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        all_found=false
+        break
+    fi
+done
+
+if $all_found; then
+    echo "All required commands ($CHECK) already installed. Nothing to do."
     exit 0
 fi
 
@@ -47,4 +55,7 @@ echo "Installing: $PKG"
 $UPDATE
 $PM $PKG
 
-echo "Done. Verify with: command -v xclip xsel wl-copy"
+echo "Performing post installation"
+pipx ensurepath
+
+echo "Done. Verify with: command -v xclip xsel wl-copy pipx"
